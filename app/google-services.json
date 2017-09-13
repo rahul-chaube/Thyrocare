@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "920013241032",
+    "firebase_url": "https://thyrocare-8b328.firebaseio.com",
+    "project_id": "thyrocare-8b328",
+    "storage_bucket": "thyrocare-8b328.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920013241032:android:df0e6f2d32e4ba67",
+        "android_client_info": {
+          "package_name": "com.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920013241032-f42rlvpe8krn2agc07i7q044thhuorm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.demo",
+            "certificate_hash": "fbd61b2ea0862a33bd8a375b2037bd796408d6a7"
+          }
+        },
+        {
+          "client_id": "920013241032-muf7rq20imtgmlq5qvsg2gemi3ses2lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlxlOzAhpc_bIBMGBnGdMfmaJ6PL-oITY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920013241032-muf7rq20imtgmlq5qvsg2gemi3ses2lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
