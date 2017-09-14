@@ -92,15 +92,12 @@ public class Registration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Utility.hideProgressBar(Registration.this);
-                        Toast.makeText(Registration.this, "Success Full",
-                                Toast.LENGTH_SHORT).show();
-
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Registration.this, "Failed",
+                            Toast.makeText(Registration.this, "Failed to to create new user "+task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                         else
