@@ -1,4 +1,4 @@
-package com.demo;
+package com.demo.utitlity;
 
 /**
  * Created by rahul on 13/9/17.

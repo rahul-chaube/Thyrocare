@@ -1,4 +1,4 @@
-package com.demo;
+package com.demo.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.demo.utitlity.DataAttributes;
+import com.demo.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -21,9 +22,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 
-import static android.R.attr.id;
-
-public class UserProfile extends AppCompatActivity {
+public class    UserProfile extends AppCompatActivity {
     ImageView imageButton;
     String uid,name,gender,yearOfBirth,careOf,villageTehsil,postOffice,district,state,postCode;
     EditText editTextName,editTextEmail,editTextMobile,editTextDob,editTextAddress,editTextPinCode,editTextMedicalHistory;

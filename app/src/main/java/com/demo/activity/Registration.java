@@ -1,4 +1,4 @@
-package com.demo;
+package com.demo.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.demo.R;
+import com.demo.utitlity.Utility;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -90,15 +92,12 @@ public class Registration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Utility.hideProgressBar(Registration.this);
-                        Toast.makeText(Registration.this, "Success Full",
-                                Toast.LENGTH_SHORT).show();
-
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Registration.this, "Failed",
+                            Toast.makeText(Registration.this, "Failed to to create new user "+task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                         else

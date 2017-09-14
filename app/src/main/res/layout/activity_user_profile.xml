@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="5dp"
-    tools:context="com.demo.UserProfile">
+    tools:context="com.demo.activity.UserProfile">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -49,13 +49,12 @@
 
             <ImageView
                 android:id="@+id/imageViewScanner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerVertical="true"
-                android:layout_margin="15dp"
-                android:layout_marginTop="70dp"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                app:srcCompat="@drawable/aadhar" />
 
         </RelativeLayout>
     </LinearLayout>
