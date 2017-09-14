@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.demo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Thyrocare"
         android:allowBackup="true"
@@ -11,18 +13,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
+
+        </activity>
+        <activity android:name=".activity.Registration" />
+        <activity android:name=".activity.UserProfile" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2124af7c555086c97b6f10eda37e68a5799c048d" />
+
+        <activity android:name=".activity.SplashScreen" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Registration" />
-        <activity android:name=".activity.UserProfile"></activity>
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="2124af7c555086c97b6f10eda37e68a5799c048d" />
+        <activity android:name=".activity.Home" />
+        <activity android:name=".activity.CreateTestScreen" />
+        <activity android:name=".activity.HistoryScreen"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

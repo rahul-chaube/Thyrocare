@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.R;
+import com.demo.utitlity.Pref;
 import com.demo.utitlity.Utility;
 import com.demo.model.UserDetail;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
+            Pref.setLogin(this,true);
             Intent intent=new Intent(MainActivity.this,UserProfile.class);
             startActivity(intent);
             finish();
