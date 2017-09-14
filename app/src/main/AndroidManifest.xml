@@ -3,21 +3,26 @@
     package="com.demo">
 
     <application
+        android:name=".Thyrocare"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registration" />
-        <activity android:name=".UserProfile"></activity>
+        <activity android:name=".activity.Registration" />
+        <activity android:name=".activity.UserProfile"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2124af7c555086c97b6f10eda37e68a5799c048d" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
