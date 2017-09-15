@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/email"
             android:layout_marginLeft="10dp"
-            android:focusable="false"
+            android:focusable="true"
             android:hint="Date of Birth"
             android:inputType="phone" />
 

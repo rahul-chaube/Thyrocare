@@ -1,12 +1,24 @@
 package com.demo.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by rahul on 15/9/17.
  */
 
-public class TestInfoModel {
-    private double ammount;
-    private String testName;
+public class TestList extends RealmObject{
+    @PrimaryKey
+    String testId;
+    double ammount;
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
 
     public double getAmmount() {
         return ammount;
@@ -48,8 +60,9 @@ public class TestInfoModel {
         this.hours = hours;
     }
 
-    private String sortDesc;
-    private String Description;
-    private int hours;
+    String testName;
+    String sortDesc;
+    String Description;
+    int hours;
 
 }
