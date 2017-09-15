@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class UserDetail extends RealmObject{
 
-    String userId;
+    private String userId;
 
     public String getUserId() {
         return userId;

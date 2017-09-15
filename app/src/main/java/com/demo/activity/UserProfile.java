@@ -1,5 +1,6 @@
 package com.demo.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -8,8 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.demo.model.FirebaseUserDetail;
@@ -33,23 +37,29 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import io.realm.Realm;
 
-public class    UserProfile extends AppCompatActivity {
+public class UserProfile extends AppCompatActivity {
     ImageView imageButton;
-    String uid, name, gender, yearOfBirth, careOf, villageTehsil, postOffice, district, state, postCode;
+    String uid, name, gender = "", yearOfBirth, careOf, villageTehsil, postOffice, district, state, postCode;
     EditText editTextName, editTextEmail, editTextMobile, editTextDob, editTextAddress, editTextPinCode, editTextMedicalHistory;
     Button buttonSave;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference userDetailRef = database.getReference(FirebaseConstant.USERDETIL);
     DatabaseReference testingNode = database.getReference("Test");
-
+    RadioGroup radioGroup;
+    Realm realm;
+    boolean allFilled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        realm = Realm.getDefaultInstance();
         imageButton = (ImageView) findViewById(R.id.imageViewScanner);
         editTextAddress = (EditText) findViewById(R.id.address);
         editTextName = (EditText) findViewById(R.id.name);
@@ -58,23 +68,59 @@ public class    UserProfile extends AppCompatActivity {
         editTextDob = (EditText) findViewById(R.id.dob);
         editTextPinCode = (EditText) findViewById(R.id.pinCode);
         editTextMedicalHistory = (EditText) findViewById(R.id.medicalHistory);
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openScanner();
             }
         });
+
         buttonSave = (Button) findViewById(R.id.btnSave);
         {
             buttonSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    saveOnFirebase();
+                    allFilled = !editTextName.getText().toString().isEmpty();
+
+                    allFilled = !editTextEmail.getText().toString().isEmpty();
+
+                    if (editTextDob.getText().toString().isEmpty())
+                        allFilled = false;
+                    else if (editTextAddress.getText().toString().isEmpty())
+                        allFilled = false;
+                    else if (gender != null && gender.isEmpty())
+                        allFilled = false;
+                    else if (editTextMobile.getText().toString().isEmpty())
+                        allFilled = false;
+                    else if (editTextPinCode.getText().toString().isEmpty())
+                        allFilled = false;
+                    else if (editTextMedicalHistory.getText().toString().isEmpty())
+                        allFilled = false;
+
+                    if (allFilled)
+                        saveOnFirebase();
+                    else
+                        Toast.makeText(UserProfile.this, "all field are mandotaory", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-        String getkey=testingNode.push().getKey();
+        String getkey = testingNode.push().getKey();
         testingNode.child(getkey).setValue(System.currentTimeMillis());
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup.clearCheck();
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = (RadioButton) group.findViewById(checkedId);
+                if (null != rb && checkedId > -1) {
+                    gender = rb.getText().toString();
+                }
+
+            }
+        });
+        initUI();
     }
 
     void openScanner() {
@@ -184,26 +230,48 @@ public class    UserProfile extends AppCompatActivity {
             final String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
             final String uid = user.getUid();
-            FirebaseUserDetail userDetail=new FirebaseUserDetail();
+            final FirebaseUserDetail userDetail = new FirebaseUserDetail();
             userDetail.setUserId(uid);
-            userDetail.setUserName(editTextName.getText().toString());
-            userDetail.setUserEmail(email);
-            userDetail.setUserDOB(editTextDob.getText().toString());
-            userDetail.setUserAddress(editTextAddress.getText().toString());
-            userDetail.setUserGender("male");
-            userDetail.setUserMobileNumber(editTextMobile.getText().toString());
-            userDetail.setUserPinCode(editTextPinCode.getText().toString());
-            userDetail.setUserMedicalHistory(editTextMedicalHistory.getText().toString());
+            if (!editTextName.getText().toString().isEmpty())
+                userDetail.setUserName(editTextName.getText().toString());
+            if (!editTextEmail.getText().toString().isEmpty())
+                userDetail.setUserEmail(email);
+            if (!editTextDob.getText().toString().isEmpty())
+                userDetail.setUserDOB(editTextDob.getText().toString());
+            if (!editTextAddress.getText().toString().isEmpty())
+                userDetail.setUserAddress(editTextAddress.getText().toString());
 
-//            Realm realm = Realm.getDefaultInstance();
-////            final UserDetail userDetail=realm.where(UserDetail.class).findFirst();
-//            realm.executeTransaction(new Realm.Transaction() {
-//                @Override
-//                public void execute(Realm realm) {
-//
-//                    realm.insertOrUpdate(userDetail);
-//                }
-//            });
+            userDetail.setUserGender(gender);
+            if (!editTextMobile.getText().toString().isEmpty())
+                userDetail.setUserMobileNumber(editTextMobile.getText().toString());
+            if (!editTextPinCode.getText().toString().isEmpty())
+                userDetail.setUserPinCode(editTextPinCode.getText().toString());
+            if (!editTextMedicalHistory.getText().toString().isEmpty())
+                userDetail.setUserMedicalHistory(editTextMedicalHistory.getText().toString());
+
+            Realm realm = Realm.getDefaultInstance();
+            final UserDetail userDetail1 = new UserDetail();
+            userDetail1.setUserId(user.getUid());
+            userDetail1.setUserName(editTextName.getText().toString());
+            userDetail1.setUserEmail(email);
+            userDetail1.setUserDOB(editTextDob.getText().toString());
+            userDetail1.setUserAddress(editTextAddress.getText().toString());
+
+            userDetail1.setUserGender(gender);
+            userDetail1.setUserMobileNumber(editTextMobile.getText().toString());
+            userDetail1.setUserPinCode(editTextPinCode.getText().toString());
+            userDetail1.setUserMedicalHistory(editTextMedicalHistory.getText().toString());
+
+
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(UserDetail.class);
+                    realm.insertOrUpdate(userDetail1);
+                    Toast.makeText(UserProfile.this, "RealmUpdated ", Toast.LENGTH_SHORT).show();
+                }
+            });
+            Log.e("Hello **** ", realm.where(UserDetail.class).findFirst().getUserEmail());
 
             userDetailRef.child(uid).setValue(userDetail).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -213,5 +281,68 @@ public class    UserProfile extends AppCompatActivity {
             });
 
         }
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+        finish();
+    }
+
+    Calendar myCalendar;
+
+    void initUI() {
+
+        try {
+            editTextEmail.setEnabled(false);
+            UserDetail userDetail = realm.where(UserDetail.class).findFirst();
+            editTextEmail.setText(userDetail.getUserEmail());
+            editTextName.setText(userDetail.getUserName());
+            editTextMobile.setText(userDetail.getUserMobileNumber());
+            editTextDob.setText(userDetail.getUserDOB());
+            gender = userDetail.getUserGender();
+            editTextAddress.setText(userDetail.getUserAddress());
+            editTextPinCode.setText(userDetail.getUserPinCode());
+            editTextMedicalHistory.setText(userDetail.getUserMedicalHistory());
+            if (gender.equals("male"))
+                radioGroup.check(R.id.radiomale);
+            else
+                radioGroup.check(R.id.radiofemale);
+            myCalendar = Calendar.getInstance();
+
+            final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    // TODO Auto-generated method stub
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, monthOfYear);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    updateLabel();
+                }
+
+            };
+            editTextDob.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    new DatePickerDialog(UserProfile.this, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }
+            });
+
+
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+
+        editTextDob.setText(sdf.format(myCalendar.getTime()));
     }
 }
