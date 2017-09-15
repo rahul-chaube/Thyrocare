@@ -7,4 +7,5 @@ package com.demo.utitlity;
 public class FirebaseConstant {
 
     public static final String USERDETIL="userDetail";
+    public static final String TESTCASE="testCase";
 }

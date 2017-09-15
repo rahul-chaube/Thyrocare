@@ -80,6 +80,8 @@ public class Home extends AppCompatActivity {
                 return true;
             case R.id.menu_admin:
                 // Green item was selected
+                Intent intent=new Intent(this,AdminPannel.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

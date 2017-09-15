@@ -12,9 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.Registration" />
         <activity android:name=".activity.UserProfile" />
 
@@ -22,17 +20,17 @@
             android:name="io.fabric.ApiKey"
             android:value="2124af7c555086c97b6f10eda37e68a5799c048d" />
 
-        <activity android:name=".activity.SplashScreen" >
-
+        <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Home" />
-        <activity android:name=".activity.CreateTestScreen" />
-        <activity android:name=".activity.HistoryScreen"></activity>
+        <activity android:name=".activity.Home" android:label="Thyrocare" />
+        <activity android:name=".activity.CreateTestScreen"  android:label="Test Form info"/>
+        <activity android:name=".activity.HistoryScreen" android:label="History"/>
+        <activity android:name=".activity.AdminPannel" android:label="New Test "/>
     </application>
 
 </manifest>
