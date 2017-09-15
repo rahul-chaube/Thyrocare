@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Demo</string>
+    <string name="female">female</string>
+    <string name="male">male</string>
 </resources>
