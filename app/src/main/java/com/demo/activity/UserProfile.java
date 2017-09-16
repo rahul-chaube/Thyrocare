@@ -178,20 +178,26 @@ public class UserProfile extends AppCompatActivity implements
                 mYear = mcurrentDate.get(Calendar.YEAR);
                 mMonth = mcurrentDate.get(Calendar.MONTH);
                 mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                try {
 
-                DatePickerDialog mDatePicker = new DatePickerDialog(UserProfile.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        Calendar calendar=Calendar.getInstance();
-                        calendar.set(selectedyear,selectedmonth,selectedday);
-                        String myFormat = "MM/dd/yy"; //In which you need put here
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    DatePickerDialog mDatePicker = new DatePickerDialog(UserProfile.this, new DatePickerDialog.OnDateSetListener() {
+                        public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(selectedyear, selectedmonth, selectedday);
+                            String myFormat = "MM/dd/yy"; //In which you need put here
+                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-                        editTextDob.setText(sdf.format(myCalendar.getTime()));
-                    }
-                }, mYear, mMonth, mDay);
-                mDatePicker.setTitle("Select date");
-                mDatePicker.show();
+                            editTextDob.setText(sdf.format(calendar.getTime()));
+                        }
+                    }, mYear, mMonth, mDay);
+                    mDatePicker.setTitle("Select date");
+                    mDatePicker.show();
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
+
         });
         initUI();
         new Handler().postDelayed(new Runnable() {
@@ -366,7 +372,7 @@ public class UserProfile extends AppCompatActivity implements
         finish();
     }
 
-    Calendar myCalendar;
+    Calendar myCalendar=Calendar.getInstance();
 
     void initUI() {
 
@@ -415,6 +421,7 @@ public class UserProfile extends AppCompatActivity implements
                     new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
                             android.Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION);
+       location();
         } else {
             locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -441,7 +448,7 @@ public class UserProfile extends AppCompatActivity implements
         } else {
             mGoogleApiClient.connect();
         }
-        location();
+
     }
 
     private void initializeLocationVariables() {
