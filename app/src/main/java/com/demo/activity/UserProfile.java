@@ -209,6 +209,7 @@ public class UserProfile extends AppCompatActivity implements
         }, 1000);
     }
 
+
     void openScanner() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);

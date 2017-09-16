@@ -17,4 +17,10 @@ public class FirebaseConstant {
     public static final String TestName="testName";
 
     public static final String PASSTESTLIST="passTestList";
+
+ public static final String TestHistoryName="name";
+    public static final String TestHistoryData="data";
+    public static final String TestHistoryTime="time";
+    public static final String TestHistoryComplete="complete";
+    public static final String TestHistoryTotalAmount="totalamount";
 }
