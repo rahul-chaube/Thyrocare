@@ -15,7 +15,11 @@ import com.demo.R;
 import com.demo.adapter.TestListAdapter;
 import com.demo.model.TestInfoModel;
 import com.demo.model.TestList;
+import com.demo.utitlity.FirebaseConstant;
 import com.demo.utitlity.Pref;
+import com.demo.utitlity.Utility;
+
+import java.util.Arrays;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -49,8 +53,16 @@ public class CreateTestScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menucheckout:
-                Toast.makeText(this, "Checkout", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,Checkout.class));
+                String [] arra=new String[testListAdapter.getSelectedTest().size()];
+                for (int i = 0; i <testListAdapter.getSelectedTest().size() ; i++) {
+                    arra[i]= testListAdapter.getSelectedTest().get(i);
+                }
+                Bundle b=new Bundle();
+                b.putStringArray(FirebaseConstant.PASSTESTLIST, arra);
+                Intent i=new Intent(this, Checkout.class);
+                i.putExtras(b);
+                startActivity(i);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
