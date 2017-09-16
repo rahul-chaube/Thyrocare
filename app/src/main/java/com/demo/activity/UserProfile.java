@@ -169,6 +169,30 @@ public class UserProfile extends AppCompatActivity implements
 
             }
         });
+        editTextDob.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(UserProfile.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        Calendar calendar=Calendar.getInstance();
+                        calendar.set(selectedyear,selectedmonth,selectedday);
+                        String myFormat = "MM/dd/yy"; //In which you need put here
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                        editTextDob.setText(sdf.format(myCalendar.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
         initUI();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -363,34 +387,7 @@ public class UserProfile extends AppCompatActivity implements
                 radioGroup.check(R.id.radiofemale);
             myCalendar = Calendar.getInstance();
 
-            editTextDob.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-
-                    // TODO Auto-generated method stub
-                    //To show current date in the datepicker
-                    Calendar mcurrentDate = Calendar.getInstance();
-                    mYear = mcurrentDate.get(Calendar.YEAR);
-                    mMonth = mcurrentDate.get(Calendar.MONTH);
-                    mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-                    DatePickerDialog mDatePicker = new DatePickerDialog(UserProfile.this, new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                            // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
-                    Calendar calendar=Calendar.getInstance();
-                            calendar.set(selectedyear,selectedmonth,selectedday);
-                            String myFormat = "MM/dd/yy"; //In which you need put here
-                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                            editTextDob.setText(sdf.format(myCalendar.getTime()));
-                        }
-                    }, mYear, mMonth, mDay);
-                    mDatePicker.setTitle("Select date");
-                    mDatePicker.show();
-                }
-            });
 
 
         } catch (Exception e) {
