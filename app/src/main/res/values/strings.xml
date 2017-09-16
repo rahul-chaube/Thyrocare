@@ -4,4 +4,11 @@
     <string name="male">male</string>
     <string name="admin">Admin</string>
     <string name="sign_out">Sign Out</string>
+    <string name="location">Location</string>
+    <string name="get_location">Get Location</string>
+    <string name="message_location_disabled_title">GPS disabled</string>
+    <string name="message_location_disabled_message">Do you want to enable it?</string>
+    <string name="allow_location_permission">Allow location permission to continue</string>
+    <string name="about_us">About Us</string>
+    <string name="aboutusrrl">http://www.thyrocare.com/About</string>
 </resources>
