@@ -441,6 +441,7 @@ public class UserProfile extends AppCompatActivity implements
         } else {
             mGoogleApiClient.connect();
         }
+        location();
     }
 
     private void initializeLocationVariables() {
