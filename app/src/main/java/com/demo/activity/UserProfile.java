@@ -36,7 +36,6 @@ import com.demo.model.UserDetail;
 import com.demo.utitlity.DataAttributes;
 import com.demo.R;
 import com.demo.utitlity.FirebaseConstant;
-import com.demo.utitlity.Utility;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -48,7 +47,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.zxing.client.androidlegacy.HelpActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -58,6 +56,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -79,6 +78,7 @@ public class UserProfile extends AppCompatActivity implements
     RadioGroup radioGroup;
     Realm realm;
     boolean allFilled = true;
+    int mYear, mMonth, mDay;
 
     //Location
 
@@ -173,11 +173,10 @@ public class UserProfile extends AppCompatActivity implements
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(UserProfile.this, "Getting Current location ", Toast.LENGTH_SHORT).show();
-                hello();
+                location();
 
             }
-        },1000);
+        }, 1000);
     }
 
     void openScanner() {
@@ -364,33 +363,38 @@ public class UserProfile extends AppCompatActivity implements
                 radioGroup.check(R.id.radiofemale);
             myCalendar = Calendar.getInstance();
 
-            final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                      int dayOfMonth) {
-                    // TODO Auto-generated method stub
-                    myCalendar.set(Calendar.YEAR, year);
-                    myCalendar.set(Calendar.MONTH, monthOfYear);
-                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    updateLabel();
-                }
-
-            };
             editTextDob.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
-                    new DatePickerDialog(UserProfile.this, date, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                    // TODO Auto-generated method stub
+                    //To show current date in the datepicker
+                    Calendar mcurrentDate = Calendar.getInstance();
+                    mYear = mcurrentDate.get(Calendar.YEAR);
+                    mMonth = mcurrentDate.get(Calendar.MONTH);
+                    mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                    DatePickerDialog mDatePicker = new DatePickerDialog(UserProfile.this, new DatePickerDialog.OnDateSetListener() {
+                        public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                            // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                    Calendar calendar=Calendar.getInstance();
+                            calendar.set(selectedyear,selectedmonth,selectedday);
+                            String myFormat = "MM/dd/yy"; //In which you need put here
+                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                            editTextDob.setText(sdf.format(myCalendar.getTime()));
+                        }
+                    }, mYear, mMonth, mDay);
+                    mDatePicker.setTitle("Select date");
+                    mDatePicker.show();
                 }
             });
 
 
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
 
@@ -406,32 +410,31 @@ public class UserProfile extends AppCompatActivity implements
 
     // Location
 
-  void  hello()
-  {
+    void location() {
 
-      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-              && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-          ActivityCompat.requestPermissions(this,
-                  new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                          android.Manifest.permission.ACCESS_FINE_LOCATION},
-                  REQUEST_LOCATION);
-      } else {
-          locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
-          if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-              userLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                            android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION);
+        } else {
+            locationManager = (LocationManager) getSystemService(Service.LOCATION_SERVICE);
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                userLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-              if (userLocation == null) {
-                  LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, UserProfile.this);
-              }
-              if (userLocation != null) {
-                  getLocation(userLocation);
-              } else {
-                  buildAlertMessageNoGps();
-              }
-          } else buildAlertMessageNoGps();
-      }
+                if (userLocation == null) {
+                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, UserProfile.this);
+                }
+                if (userLocation != null) {
+                    getLocation(userLocation);
+                } else {
+                    buildAlertMessageNoGps();
+                }
+            } else buildAlertMessageNoGps();
+        }
 
-  }
+    }
 
     @Override
     protected void onResume() {
@@ -458,6 +461,7 @@ public class UserProfile extends AppCompatActivity implements
             mGoogleApiClient.connect();
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -486,9 +490,9 @@ public class UserProfile extends AppCompatActivity implements
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
             for (int i = 0; i < addresses.size(); i++) {
-                Log.e(TAG,addresses.get(i).toString());
+                Log.e(TAG, addresses.get(i).toString());
             }
-            currentAddress = addresses.get(0).getAddressLine(0)+" "+addresses.get(0).getAddressLine(1)+addresses.get(0).getAddressLine(2)+addresses.get(0).getAddressLine(3);
+            currentAddress = addresses.get(0).getAddressLine(0) + " " + addresses.get(0).getAddressLine(1) + addresses.get(0).getAddressLine(2) + addresses.get(0).getAddressLine(3);
 //            tvSetLocation.setText(currentAddress.trim());
 
             editTextAddress.setText(currentAddress);

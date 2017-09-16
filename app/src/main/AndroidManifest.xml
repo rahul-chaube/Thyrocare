@@ -41,6 +41,7 @@
             android:name=".activity.AdminPannel"
             android:label="New Test " />
         <activity android:name=".activity.Checkout" android:label="Checkout"/>
+        <receiver android:name=".MyBroadcastReceiver"/>
     </application>
 
 </manifest>

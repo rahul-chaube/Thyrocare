@@ -12,4 +12,14 @@
         android:orderInCategory="2"
         app:showAsAction="never"
         android:title="@string/admin"/>
+    <item
+        android:id="@+id/menuAboutUs"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="@string/about_us"/>
+    <item
+        android:id="@+id/sendMail"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="Send Mail"/>
 </menu>
