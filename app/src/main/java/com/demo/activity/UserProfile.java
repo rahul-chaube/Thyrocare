@@ -36,6 +36,7 @@ import com.demo.model.UserDetail;
 import com.demo.utitlity.DataAttributes;
 import com.demo.R;
 import com.demo.utitlity.FirebaseConstant;
+import com.demo.utitlity.Utility;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -147,8 +148,13 @@ public class UserProfile extends AppCompatActivity implements
                     else if (editTextMedicalHistory.getText().toString().isEmpty())
                         allFilled = false;
 
-                    if (allFilled)
-                        saveOnFirebase();
+                    if (allFilled){
+                        if(Utility.isNetworkAvailable(UserProfile.this))
+                            saveOnFirebase();
+                        else
+                            Toast.makeText(UserProfile.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                    }
                     else
                         Toast.makeText(UserProfile.this, "all field are mandotaory", Toast.LENGTH_SHORT).show();
                 }

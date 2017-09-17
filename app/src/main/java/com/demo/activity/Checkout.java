@@ -52,6 +52,8 @@ public class Checkout extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView= (RecyclerView) findViewById(R.id.selectedTestRecyclerView);
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

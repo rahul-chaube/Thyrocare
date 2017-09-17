@@ -36,6 +36,7 @@ public class HistoryScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_screen);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView= (RecyclerView) findViewById(R.id.historyRecyclerView);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -56,6 +57,7 @@ public class HistoryScreen extends AppCompatActivity {
                             testModel.setData(list);
                             testModels.add(testModel);
                         }
+                        initUI();
                     }
                 }
 
@@ -72,5 +74,10 @@ public class HistoryScreen extends AppCompatActivity {
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new TestHistoryAdapter(this,testModels));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

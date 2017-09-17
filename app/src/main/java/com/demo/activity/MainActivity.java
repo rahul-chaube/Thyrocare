@@ -59,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().isEmpty()&& !editTextPassword.getText().toString().isEmpty())
                 {
+                    if(Utility.isNetworkAvailable(MainActivity.this))
                     login(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
+                    else
+                        Toast.makeText(MainActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

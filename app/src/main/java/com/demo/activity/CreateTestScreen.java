@@ -35,6 +35,8 @@ public class CreateTestScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_test_screen);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         realm = Realm.getDefaultInstance();
         recyclerView = (RecyclerView) findViewById(R.id.testList);
         layoutManager = new LinearLayoutManager(this);
@@ -54,15 +56,21 @@ public class CreateTestScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menucheckout:
                 String [] arra=new String[testListAdapter.getSelectedTest().size()];
+
                 for (int i = 0; i <testListAdapter.getSelectedTest().size() ; i++) {
                     arra[i]= testListAdapter.getSelectedTest().get(i);
                 }
-                Bundle b=new Bundle();
-                b.putStringArray(FirebaseConstant.PASSTESTLIST, arra);
-                Intent i=new Intent(this, Checkout.class);
-                i.putExtras(b);
-                startActivity(i);
-                finish();
+                if (arra.length>0) {
+                    Bundle b = new Bundle();
+                    b.putStringArray(FirebaseConstant.PASSTESTLIST, arra);
+                    Intent i = new Intent(this, Checkout.class);
+                    i.putExtras(b);
+                    startActivity(i);
+                    finish();
+                }
+                else {
+                    Toast.makeText(this, "Select Test ", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
