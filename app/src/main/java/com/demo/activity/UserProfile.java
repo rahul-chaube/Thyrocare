@@ -265,7 +265,7 @@ public class UserProfile extends AppCompatActivity implements
             int eventType = parser.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_DOCUMENT) {
-                    Log.d("Rajdeol", "Start document");
+
                 } else if (eventType == XmlPullParser.START_TAG && DataAttributes.AADHAAR_DATA_TAG.equals(parser.getName())) {
                     // extract data from tag
                     //uid
@@ -313,7 +313,13 @@ public class UserProfile extends AppCompatActivity implements
         editTextName.setText(name);
         editTextDob.setText(yearOfBirth);
         editTextPinCode.setText(postOffice);
-        editTextAddress.setText(careOf + "  " + villageTehsil + " \n " + postOffice + "  " + district + " " + state);
+        editTextAddress.setText(villageTehsil + " \n " + postOffice + "  " + district + " " + state);
+        editTextPinCode.setText(postCode);
+        if(gender.equals("M"))
+            radioGroup.check(R.id.radiomale);
+        else
+            radioGroup.check(R.id.radiofemale);
+
     }
 
     void saveOnFirebase() {
