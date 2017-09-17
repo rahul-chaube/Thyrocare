@@ -31,11 +31,11 @@ public class TestModel {
         this.totalamount = totalamount;
     }
 
-    public List<TestInfoModel> getData() {
+    public List<String> getData() {
         return data;
     }
 
-    public void setData(List<TestInfoModel> data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 
@@ -52,6 +52,6 @@ public class TestModel {
 
 
     private String totalamount;
-    private List<TestInfoModel> data;
+    private List<String> data;
     private int complete;
 }

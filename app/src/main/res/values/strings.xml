@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Demo</string>
+    <string name="app_name">Thyrocare</string>
     <string name="female">female</string>
     <string name="male">male</string>
     <string name="admin">Admin</string>
@@ -11,4 +11,6 @@
     <string name="allow_location_permission">Allow location permission to continue</string>
     <string name="about_us">About Us</string>
     <string name="aboutusrrl">http://www.thyrocare.com/About</string>
+    <string name="test_history">Test History</string>
+    <string name="share_via_mail">Share Via Mail</string>
 </resources>

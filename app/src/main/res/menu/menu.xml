@@ -21,5 +21,5 @@
         android:id="@+id/sendMail"
         android:orderInCategory="2"
         app:showAsAction="never"
-        android:title="Send Mail"/>
+        android:title="Contact Us"/>
 </menu>

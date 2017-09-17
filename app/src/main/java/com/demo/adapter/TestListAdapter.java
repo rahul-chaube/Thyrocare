@@ -32,7 +32,7 @@ public class TestListAdapter extends RecyclerView.Adapter<TestListAdapter.ViewHo
     }
     ArrayList<String> selectedTestsList=new ArrayList<>();
 
-    public TestListAdapter(Checkout checkout, RealmResults<TestList> testLists, int i) {
+    public TestListAdapter(Context checkout, RealmResults<TestList> testLists, int i) {
         this.createTestScreen=checkout;
         this.testInfoModels=testLists;
         this.code=i;

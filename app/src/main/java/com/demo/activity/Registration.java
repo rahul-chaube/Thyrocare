@@ -58,7 +58,10 @@ public class Registration extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().isEmpty()&& !editTextPassword.getText().toString().isEmpty())
                 {
-                    createNewUser(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
+                    if(Utility.isNetworkAvailable(Registration.this))
+                        createNewUser(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
+                    else
+                        Toast.makeText(Registration.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

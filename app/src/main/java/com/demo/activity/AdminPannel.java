@@ -26,6 +26,8 @@ public class AdminPannel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_pannel);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         editTextTestName= (EditText) findViewById(R.id.textName);
         editTextSortDesc= (EditText) findViewById(R.id.testSortDesc);
         editTextTestDesc= (EditText) findViewById(R.id.desc);

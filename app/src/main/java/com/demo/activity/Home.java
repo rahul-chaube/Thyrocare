@@ -36,7 +36,7 @@ import io.realm.RealmResults;
 import static java.security.AccessController.getContext;
 
 public class Home extends AppCompatActivity {
-    ImageView imageViewProfile, imageViewHistory, imageViewCreateTest;
+    ImageView imageViewAboutUs,imageViewProfile, imageViewHistory, imageViewCreateTest;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference testRef = database.getReference(FirebaseConstant.TESTCASE);
     Realm realm;
@@ -49,6 +49,7 @@ public class Home extends AppCompatActivity {
         imageViewProfile = (ImageView) findViewById(R.id.profile);
         imageViewHistory = (ImageView) findViewById(R.id.lastTest);
         imageViewCreateTest = (ImageView) findViewById(R.id.newTest);
+        imageViewAboutUs= (ImageView) findViewById(R.id.aboutus);
         getTestList();
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +71,13 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this, CreateTestScreen.class);
                 startActivity(intent);
+            }
+        });
+        imageViewAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCustomTabs(getResources().getString(R.string.aboutusrrl));
+
             }
         });
 
@@ -121,20 +129,11 @@ public class Home extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email[]={user.getEmail()};
-
-        String html = "Hi I am Rahul Chaube \n" +
-                " PFA  " +
-                "Pasien name    Rahul chaube\n" +
-                "Test Case \n" +
-                "Hello World                  40000 \n" +
-                "Java                         30000";
-
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
 
         intent.putExtra(Intent.EXTRA_EMAIL,email );
         intent.putExtra(Intent.EXTRA_SUBJECT, "Testing");
-        intent.putExtra(Intent.EXTRA_TEXT, html);
 
 /* Send it off to the Activity-Chooser */
         startActivity(Intent.createChooser(intent, "ContactUs"));

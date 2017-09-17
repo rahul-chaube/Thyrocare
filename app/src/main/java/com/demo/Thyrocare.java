@@ -5,6 +5,8 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.database.FirebaseDatabase;
+
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -24,6 +26,7 @@ public class Thyrocare extends Application {
                 .migration(new Migration()) // Migration to run instead of throwing an exception
                 .build();
         Realm.setDefaultConfiguration(config);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         registerActivityLifecycleCallbacks(new MyActivityLifeCycle());
     }
     class  MyActivityLifeCycle implements ActivityLifecycleCallbacks
