@@ -42,11 +42,19 @@
 ### Checkout Screen 
    User selected test and and total amount of test come on this screen. When user click on the Book Test , that test get added in his account user will get notification.
   
-### About Us 
-   After clicking on the About Us button user will redirect About Us home page on Web site
 ### History Screen
    On this page user will get all his book test.
 ### Test Detail 
   This page open when user click on the history list.Here user can see detail about hist test report and User can share test report via email by click share botton Top Right lift.
 ### Admin Screen
    This screen used for administration.Here we can add new Test for all user. User Will Get update imidately.All field on this screen is mandatory.
+### About Us 
+   After clicking on the About Us button user will redirect About Us home page on Web site
+  ------
+### Database
+
+- Firebase Database
+- Firebase Authentication
+- Firebase FCM
+- [Realm](https://realm.io/) for Local Storage
+
