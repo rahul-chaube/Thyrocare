@@ -50,8 +50,7 @@
    This screen used for administration.Here we can add new Test for all user. User Will Get update imidately.All field on this screen is mandatory.
 ### About Us 
    After clicking on the About Us button user will redirect About Us home page on Web site
-  ------
-### Database
+ ### Database
 
 - Firebase Database
 - Firebase Authentication
