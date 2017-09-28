@@ -47,10 +47,13 @@ public class Checkout extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     double totalAmount;
     List<TestInfoModel> tests=new ArrayList<>();
+    List<String> data=new ArrayList<>();
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView= (RecyclerView) findViewById(R.id.selectedTestRecyclerView);
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -74,6 +77,7 @@ public class Checkout extends AppCompatActivity {
             tests.add(testInfoModel);
             totalAmount=totalAmount+testList.getAmmount();
             temp.add(testList.getHours());
+            data.add(testList.getTestId());
             Log.e(" Checkout  ",testList.getTestName()+ " "+testList.getHours());
         }
         completed= Collections.max(temp);
@@ -97,7 +101,7 @@ public class Checkout extends AppCompatActivity {
         testModel.setTotalamount(String.valueOf(totalAmount));
         testModel.setComplete(completed);
         testModel.setTime(System.currentTimeMillis());
-        testModel.setData(tests);
+        testModel.setData(data);
         String key=testHistory.push().getKey();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {

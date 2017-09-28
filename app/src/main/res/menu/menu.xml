@@ -21,5 +21,10 @@
         android:id="@+id/sendMail"
         android:orderInCategory="2"
         app:showAsAction="never"
-        android:title="Send Mail"/>
+        android:title="@string/contact_us"/>
+    <item
+        android:id="@+id/changePassword"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="@string/reset_password"/>
 </menu>

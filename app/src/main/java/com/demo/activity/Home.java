@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Debug;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,19 +37,40 @@ import io.realm.RealmResults;
 import static java.security.AccessController.getContext;
 
 public class Home extends AppCompatActivity {
-    ImageView imageViewProfile, imageViewHistory, imageViewCreateTest;
+    ImageView imageViewAboutUs,imageViewProfile, imageViewHistory, imageViewCreateTest;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference testRef = database.getReference(FirebaseConstant.TESTCASE);
     Realm realm;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private static final String TAG ="Home Screen" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.e(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.e(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
         realm = Realm.getDefaultInstance();
         imageViewProfile = (ImageView) findViewById(R.id.profile);
         imageViewHistory = (ImageView) findViewById(R.id.lastTest);
         imageViewCreateTest = (ImageView) findViewById(R.id.newTest);
+        imageViewAboutUs= (ImageView) findViewById(R.id.aboutus);
         getTestList();
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +92,13 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this, CreateTestScreen.class);
                 startActivity(intent);
+            }
+        });
+        imageViewAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCustomTabs(getResources().getString(R.string.aboutusrrl));
+
             }
         });
 
@@ -112,6 +141,9 @@ public class Home extends AppCompatActivity {
                 // Green item was selected
                 sendMail();
                 return true;
+            case R.id.changePassword:
+                startActivity(new Intent(Home.this,ChangePassword.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -121,20 +153,11 @@ public class Home extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email[]={user.getEmail()};
-
-        String html = "Hi I am Rahul Chaube \n" +
-                " PFA  " +
-                "Pasien name    Rahul chaube\n" +
-                "Test Case \n" +
-                "Hello World                  40000 \n" +
-                "Java                         30000";
-
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
 
         intent.putExtra(Intent.EXTRA_EMAIL,email );
         intent.putExtra(Intent.EXTRA_SUBJECT, "Testing");
-        intent.putExtra(Intent.EXTRA_TEXT, html);
 
 /* Send it off to the Activity-Chooser */
         startActivity(Intent.createChooser(intent, "ContactUs"));

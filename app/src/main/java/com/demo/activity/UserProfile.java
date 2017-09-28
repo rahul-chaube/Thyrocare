@@ -36,6 +36,7 @@ import com.demo.model.UserDetail;
 import com.demo.utitlity.DataAttributes;
 import com.demo.R;
 import com.demo.utitlity.FirebaseConstant;
+import com.demo.utitlity.Utility;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -147,8 +148,13 @@ public class UserProfile extends AppCompatActivity implements
                     else if (editTextMedicalHistory.getText().toString().isEmpty())
                         allFilled = false;
 
-                    if (allFilled)
-                        saveOnFirebase();
+                    if (allFilled){
+                        if(Utility.isNetworkAvailable(UserProfile.this))
+                            saveOnFirebase();
+                        else
+                            Toast.makeText(UserProfile.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                    }
                     else
                         Toast.makeText(UserProfile.this, "all field are mandotaory", Toast.LENGTH_SHORT).show();
                 }
@@ -209,6 +215,7 @@ public class UserProfile extends AppCompatActivity implements
         }, 1000);
     }
 
+
     void openScanner() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
@@ -258,7 +265,7 @@ public class UserProfile extends AppCompatActivity implements
             int eventType = parser.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_DOCUMENT) {
-                    Log.d("Rajdeol", "Start document");
+
                 } else if (eventType == XmlPullParser.START_TAG && DataAttributes.AADHAAR_DATA_TAG.equals(parser.getName())) {
                     // extract data from tag
                     //uid
@@ -306,7 +313,13 @@ public class UserProfile extends AppCompatActivity implements
         editTextName.setText(name);
         editTextDob.setText(yearOfBirth);
         editTextPinCode.setText(postOffice);
-        editTextAddress.setText(careOf + "  " + villageTehsil + " \n " + postOffice + "  " + district + " " + state);
+        editTextAddress.setText(villageTehsil + " \n " + postOffice + "  " + district + " " + state);
+        editTextPinCode.setText(postCode);
+        if(gender.equals("M"))
+            radioGroup.check(R.id.radiomale);
+        else
+            radioGroup.check(R.id.radiofemale);
+
     }
 
     void saveOnFirebase() {
