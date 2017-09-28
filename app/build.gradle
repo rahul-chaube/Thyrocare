@@ -64,6 +64,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
     compile 'com.android.support:customtabs:25.3.1'
+    compile 'com.github.GrenderG:Toasty:1.2.5'
     testCompile 'junit:junit:4.12'
 }
 

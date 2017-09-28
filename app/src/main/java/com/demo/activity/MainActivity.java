@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.R;
+import com.demo.utitlity.FirebaseOperation;
 import com.demo.utitlity.Pref;
 import com.demo.utitlity.Utility;
 import com.demo.model.UserDetail;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().isEmpty()&& !editTextPassword.getText().toString().isEmpty())
                 {
+//                    FirebaseOperation firebaseOperation=new FirebaseOperation();
+//                    firebaseOperation.login(this,editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim())
                     login(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
                 }
                 else
@@ -90,14 +94,13 @@ public class MainActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(MainActivity.this,"Task Failed",
-                                    Toast.LENGTH_SHORT).show();
+                            Toasty.error(MainActivity.this, "Login Failed ", Toast.LENGTH_SHORT, true).show();
+
                         }
                         else
                         {
                             profile();
-//                            Toast.makeText(MainActivity.this, "Login SuccessFull", Toast.LENGTH_SHORT).show();
+                            Toasty.success(MainActivity.this, "Login Success Full", Toast.LENGTH_SHORT, true).show();
                         }
 
                         // ...
