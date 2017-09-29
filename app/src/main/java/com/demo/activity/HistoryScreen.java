@@ -1,18 +1,12 @@
 package com.demo.activity;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.demo.R;
 import com.demo.adapter.TestHistoryAdapter;
-import com.demo.model.TestInfoModel;
 import com.demo.model.TestModel;
 import com.demo.utitlity.FirebaseConstant;
 import com.google.firebase.auth.FirebaseAuth;

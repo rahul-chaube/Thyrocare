@@ -63,6 +63,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 
 public class UserProfile extends AppCompatActivity implements
@@ -308,6 +309,12 @@ public class UserProfile extends AppCompatActivity implements
 
     }// EO function
 
+
+    void getDataFromFirebase()
+    {
+
+    }
+
     void displayScannedData() {
         Toast.makeText(this, name + "   and " + uid, Toast.LENGTH_SHORT).show();
         editTextName.setText(name);
@@ -367,7 +374,7 @@ public class UserProfile extends AppCompatActivity implements
                 public void execute(Realm realm) {
                     realm.delete(UserDetail.class);
                     realm.insertOrUpdate(userDetail1);
-                    Toast.makeText(UserProfile.this, "RealmUpdated ", Toast.LENGTH_SHORT).show();
+                    Toasty.success(UserProfile.this, "RealmUpdated ", Toast.LENGTH_SHORT).show();
                 }
             });
             Log.e("Hello **** ", realm.where(UserDetail.class).findFirst().getUserEmail());
@@ -375,7 +382,7 @@ public class UserProfile extends AppCompatActivity implements
             userDetailRef.child(uid).setValue(userDetail).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(UserProfile.this, "User Detail Updated Success Fully", Toast.LENGTH_SHORT).show();
+                    Toasty.success(UserProfile.this, "User Detail Updated Success Fully", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -405,10 +412,6 @@ public class UserProfile extends AppCompatActivity implements
             else
                 radioGroup.check(R.id.radiofemale);
             myCalendar = Calendar.getInstance();
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -572,4 +575,5 @@ public class UserProfile extends AppCompatActivity implements
     public void onClick(View v) {
 
     }
+
 }

@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 
 public class Registration extends AppCompatActivity {
@@ -35,9 +36,9 @@ public class Registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail= (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword= (EditText) findViewById(R.id.editTextPassword);
-        btnLogin= (Button) findViewById(R.id.btnLogin);
+        editTextEmail= (EditText) findViewById(R.id.editTextPassword);
+        editTextPassword= (EditText) findViewById(R.id.editTextConformPassword);
+        btnLogin= (Button) findViewById(R.id.btnForget);
         textViewLogin = (TextView) findViewById(R.id.textViewRegistor);
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -61,7 +62,7 @@ public class Registration extends AppCompatActivity {
                     if(Utility.isNetworkAvailable(Registration.this))
                         createNewUser(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
                     else
-                        Toast.makeText(Registration.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                        Toasty.error(Registration.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

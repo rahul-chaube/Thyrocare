@@ -21,6 +21,7 @@ import com.demo.utitlity.Utility;
 
 import java.util.Arrays;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -69,7 +70,7 @@ public class CreateTestScreen extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Toast.makeText(this, "Select Test ", Toast.LENGTH_SHORT).show();
+                    Toasty.info(this, "Select Test ", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:

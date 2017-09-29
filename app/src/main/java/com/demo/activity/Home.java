@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Debug;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,11 +41,31 @@ public class Home extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference testRef = database.getReference(FirebaseConstant.TESTCASE);
     Realm realm;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private static final String TAG ="Home Screen" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.e(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.e(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
         realm = Realm.getDefaultInstance();
         imageViewProfile = (ImageView) findViewById(R.id.profile);
         imageViewHistory = (ImageView) findViewById(R.id.lastTest);
@@ -119,6 +140,9 @@ public class Home extends AppCompatActivity {
             case R.id.sendMail:
                 // Green item was selected
                 sendMail();
+                return true;
+            case R.id.changePassword:
+                startActivity(new Intent(Home.this,ChangePassword.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

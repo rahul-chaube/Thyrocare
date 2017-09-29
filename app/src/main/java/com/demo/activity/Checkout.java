@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -109,7 +110,7 @@ public class Checkout extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     createNotification();
-                    Toast.makeText(Checkout.this, " Test Added ", Toast.LENGTH_SHORT).show();
+                    Toasty.success(Checkout.this, " Test Added ", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Checkout.this,Home.class));
                     finish();
                 }
@@ -126,7 +127,5 @@ public class Checkout extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + (completed * 100), pendingIntent);
-        Toast.makeText(this, "Alarm is Set ", Toast.LENGTH_SHORT).show();
-
     }
 }

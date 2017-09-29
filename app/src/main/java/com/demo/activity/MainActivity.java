@@ -22,24 +22,34 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    EditText editTextEmail,editTextPassword;
+    EditText editTextEmail, editTextPassword;
     Button btnLogin;
-    TextView textViewRegistor;
-    String TAG="LoginScreen";
+    TextView textViewRegistor,textViewForget;
+
+    String TAG = "LoginScreen";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail= (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword= (EditText) findViewById(R.id.editTextPassword);
-        btnLogin= (Button) findViewById(R.id.btnLogin);
-        textViewRegistor= (TextView) findViewById(R.id.textViewRegistor);
+        editTextEmail = (EditText) findViewById(R.id.editTextPassword);
+        editTextPassword = (EditText) findViewById(R.id.editTextConformPassword);
+        textViewForget= (TextView) findViewById(R.id.textViewForget);
+        btnLogin = (Button) findViewById(R.id.btnForget);
+        textViewRegistor = (TextView) findViewById(R.id.textViewRegistor);
+        textViewForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ForgetPassword.class));
+            }
+        });
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -57,30 +67,29 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextEmail.getText().toString().isEmpty()&& !editTextPassword.getText().toString().isEmpty())
-                {
-                    if(Utility.isNetworkAvailable(MainActivity.this))
-                    login(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim());
+                if (!editTextEmail.getText().toString().isEmpty() && !editTextPassword.getText().toString().isEmpty()) {
+//                    FirebaseOperation firebaseOperation=new FirebaseOperation();
+//                    firebaseOperation.login(this,editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim())
+                    if (Utility.isNetworkAvailable(MainActivity.this))
+                        login(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim());
                     else
-                        Toast.makeText(MainActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                        Toasty.warning(MainActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(MainActivity.this, " Please Fill all Field", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-                textViewRegistor.setOnClickListener(new View.OnClickListener() {
+        textViewRegistor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Registration.class);
+                Intent intent = new Intent(MainActivity.this, Registration.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
-    void login(String email,String password)
-    {
+
+    void login(String email, String password) {
         Utility.createProgressBar(this);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -93,25 +102,24 @@ public class MainActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(MainActivity.this,"Task Failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
+                            Toasty.error(MainActivity.this, "Login Failed ", Toast.LENGTH_SHORT, true).show();
+
+                        } else {
                             profile();
-//                            Toast.makeText(MainActivity.this, "Login SuccessFull", Toast.LENGTH_SHORT).show();
+                            Toasty.success(MainActivity.this, "Login Success Full", Toast.LENGTH_SHORT, true).show();
                         }
 
                         // ...
                     }
                 });
     }
+
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -119,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    void profile() throws NullPointerException
-    {
+
+    void profile() throws NullPointerException {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             final String name = user.getDisplayName();
@@ -128,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
             Uri photoUrl = user.getPhotoUrl();
             final String uid = user.getUid();
 
-            Realm realm=Realm.getDefaultInstance();
+            Realm realm = Realm.getDefaultInstance();
 //            final UserDetail userDetail=realm.where(UserDetail.class).findFirst();
-            final UserDetail userDetail1=new UserDetail();
+            final UserDetail userDetail1 = new UserDetail();
             userDetail1.setUserEmail(email);
             userDetail1.setUserName(name);
             realm.executeTransaction(new Realm.Transaction() {
@@ -141,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            Pref.setLogin(this,true);
-            Intent intent=new Intent(MainActivity.this,UserProfile.class);
+            Pref.setLogin(this, true);
+            Intent intent = new Intent(MainActivity.this, UserProfile.class);
             startActivity(intent);
             finish();
         }
