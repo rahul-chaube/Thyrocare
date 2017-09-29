@@ -2,27 +2,23 @@ package com.demo.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.demo.R;
-import com.demo.adapter.TestHistoryAdapter;
 import com.demo.adapter.TestListAdapter;
 import com.demo.model.TestList;
 import com.demo.model.UserDetail;
-import com.demo.utitlity.Pref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
 
 import io.realm.Realm;

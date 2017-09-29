@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import es.dmoral.toasty.Toasty;
+
 public class AdminPannel extends AppCompatActivity {
     EditText editTextTestName,editTextSortDesc,editTextTestDesc,editTextAmount,editTextTimeTake;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -60,7 +62,7 @@ public class AdminPannel extends AppCompatActivity {
         testCaseRef.child(key).setValue(testInfoModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(AdminPannel.this, "Added", Toast.LENGTH_SHORT).show();
+                Toasty.success(AdminPannel.this, "Added", Toast.LENGTH_SHORT).show();
              finish();
 
             }
@@ -73,28 +75,28 @@ public class AdminPannel extends AppCompatActivity {
         boolean addAllField=true;
         if(editTextTestName.getText().toString().isEmpty())
         {
-            Toast.makeText(this, "Enter Test Name", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Enter Test Name", Toast.LENGTH_SHORT).show();
             addAllField=false;
         }
         else  if(editTextSortDesc.getText().toString().isEmpty())
         {
             addAllField=false;
-            Toast.makeText(this, "Enter Test Sort Desc", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Enter Test Sort Desc", Toast.LENGTH_SHORT).show();
         }
         else  if(editTextTestDesc.getText().toString().isEmpty())
         {
             addAllField=false;
-            Toast.makeText(this, "Enter Test Description", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Enter Test Description", Toast.LENGTH_SHORT).show();
         }
         else if(editTextAmount.getText().toString().isEmpty())
         {
             addAllField=false;
-            Toast.makeText(this, "Enter Test Amount", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Enter Test Amount", Toast.LENGTH_SHORT).show();
         }
         else if(editTextTimeTake.getText().toString().isEmpty())
         {
             addAllField=false;
-            Toast.makeText(this, "Enter Test Time", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Enter Test Time", Toast.LENGTH_SHORT).show();
         }
 //        else  if(Integer.parseInt(editTextAmount.getText().toString())>=0)
 //        {
