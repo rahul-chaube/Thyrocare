@@ -20,6 +20,8 @@
 - [History Screen](https://github.com/rahul-chaube/Thyrocare/blob/master/app/src/main/java/com/demo/activity/HistoryScreen.java)
 - [Checkout Screen](https://github.com/rahul-chaube/Thyrocare/blob/master/app/src/main/java/com/demo/activity/Checkout.java)
 - [TestDetail Screen](https://github.com/rahul-chaube/Thyrocare/blob/master/app/src/main/java/com/demo/activity/TestDetailActivity.java)
+[Change Password](https://github.com/rahul-chaube/Thyrocare/blob/master/app/src/main/java/com/demo/activity/ChangePassword.java)
+[Forget Password](https://github.com/rahul-chaube/Thyrocare/blob/master/app/src/main/java/com/demo/activity/ForgetPassword.java)
 
 ### SPLASH SCREEN
    Splash screen will display default image when user start the app
@@ -49,7 +51,11 @@
 ### Admin Screen
    This screen used for administration.Here we can add new Test for all user. User Will Get update imidately.All field on this screen is mandatory.
 ### About Us 
-   After clicking on the About Us button user will redirect About Us home page on Web site
+   After clicking on the About Us button user will redirect About Us home page on Web site .
+### Change Password
+   From here user can change his password .
+### Forget Password
+   From here user can reset the password and by enatering his email id and he will get link on his email id.
  ### Database
 
 - Firebase Database
