@@ -73,6 +73,8 @@
             android:parentActivityName=".activity.HistoryScreen"
             android:name=".activity.TestDetailActivity"
             android:label="Test Detail" />
+        <activity android:name=".activity.ForgetPassword" />
+        <activity android:name=".activity.ChangePassword"/>
     </application>
 
 </manifest>
